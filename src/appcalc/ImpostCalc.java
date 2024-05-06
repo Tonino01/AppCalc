@@ -42,6 +42,8 @@ public class ImpostCalc extends JFrame{
 
         barramultifunzione = new javax.swing.JPanel();
         chiudi = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         sfondo = new javax.swing.JPanel();
         darkmode = new javax.swing.JRadioButton();
 
@@ -76,6 +78,17 @@ public class ImpostCalc extends JFrame{
         });
         barramultifunzione.add(chiudi, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 30, 30));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/impostazioni.png"))); // NOI18N
+        barramultifunzione.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 40, 30));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/riduci-a-icona.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        barramultifunzione.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 30, 30));
+
         getContentPane().add(barramultifunzione, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 50));
 
         sfondo.setBackground(new java.awt.Color(153, 153, 153));
@@ -87,7 +100,7 @@ public class ImpostCalc extends JFrame{
                 darkmodeActionPerformed(evt);
             }
         });
-        sfondo.add(darkmode, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
+        sfondo.add(darkmode, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
         getContentPane().add(sfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 230, 170));
 
@@ -144,6 +157,12 @@ public class ImpostCalc extends JFrame{
         osservato.notifyObservers();
 
     }//GEN-LAST:event_darkmodeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        this.setExtendedState(ImpostCalc.ICONIFIED);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     public boolean darkmod = false;
     
@@ -208,6 +227,8 @@ public class ImpostCalc extends JFrame{
     private javax.swing.JPanel barramultifunzione;
     private javax.swing.JButton chiudi;
     private javax.swing.JRadioButton darkmode;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel sfondo;
     // End of variables declaration//GEN-END:variables
 

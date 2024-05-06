@@ -51,6 +51,7 @@ public class CalcFrame extends JFrame implements Observer {
         barramultifunzione = new javax.swing.JPanel();
         chiudi = new javax.swing.JButton();
         impostazioni = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         sfondo = new javax.swing.JPanel();
         display = new javax.swing.JTextField();
         uno = new javax.swing.JButton();
@@ -63,7 +64,7 @@ public class CalcFrame extends JFrame implements Observer {
         otto = new javax.swing.JButton();
         nove = new javax.swing.JButton();
         uguale = new javax.swing.JButton();
-        Canc = new javax.swing.JButton();
+        elimina = new javax.swing.JButton();
         addizione = new javax.swing.JButton();
         sottrazione = new javax.swing.JButton();
         prodotto = new javax.swing.JButton();
@@ -71,6 +72,7 @@ public class CalcFrame extends JFrame implements Observer {
         virgola = new javax.swing.JButton();
         zero = new javax.swing.JButton();
         Conversione = new javax.swing.JButton();
+        cancella = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CALCOLATRICE");
@@ -79,7 +81,6 @@ public class CalcFrame extends JFrame implements Observer {
         setForeground(java.awt.Color.gray);
         setIconImages(null);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(320, 420));
         setResizable(false);
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -113,7 +114,7 @@ public class CalcFrame extends JFrame implements Observer {
                 chiudiActionPerformed(evt);
             }
         });
-        barramultifunzione.add(chiudi, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 30, 30));
+        barramultifunzione.add(chiudi, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 31, 31));
 
         impostazioni.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon.png"))); // NOI18N
         impostazioni.setContentAreaFilled(false);
@@ -124,6 +125,14 @@ public class CalcFrame extends JFrame implements Observer {
             }
         });
         barramultifunzione.add(impostazioni, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 32, 32));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/riduci-a-icona.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        barramultifunzione.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 31, 31));
 
         getContentPane().add(barramultifunzione, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 50));
 
@@ -152,7 +161,7 @@ public class CalcFrame extends JFrame implements Observer {
                 unoActionPerformed(evt);
             }
         });
-        sfondo.add(uno, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 43, 43));
+        sfondo.add(uno, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 40, 43));
 
         due.setBackground(new java.awt.Color(102, 102, 102));
         due.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -179,7 +188,7 @@ public class CalcFrame extends JFrame implements Observer {
                 treActionPerformed(evt);
             }
         });
-        sfondo.add(tre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 43, 43));
+        sfondo.add(tre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 40, 43));
 
         quattro.setBackground(new java.awt.Color(102, 102, 102));
         quattro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -189,7 +198,7 @@ public class CalcFrame extends JFrame implements Observer {
                 quattroActionPerformed(evt);
             }
         });
-        sfondo.add(quattro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 43, 43));
+        sfondo.add(quattro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 40, 43));
 
         cinque.setBackground(new java.awt.Color(102, 102, 102));
         cinque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -209,7 +218,7 @@ public class CalcFrame extends JFrame implements Observer {
                 seiActionPerformed(evt);
             }
         });
-        sfondo.add(sei, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 43, 43));
+        sfondo.add(sei, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 40, 43));
 
         sette.setBackground(new java.awt.Color(102, 102, 102));
         sette.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -219,7 +228,7 @@ public class CalcFrame extends JFrame implements Observer {
                 setteActionPerformed(evt);
             }
         });
-        sfondo.add(sette, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 43, 43));
+        sfondo.add(sette, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 40, 43));
 
         otto.setBackground(new java.awt.Color(102, 102, 102));
         otto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -229,7 +238,7 @@ public class CalcFrame extends JFrame implements Observer {
                 ottoActionPerformed(evt);
             }
         });
-        sfondo.add(otto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 43, 43));
+        sfondo.add(otto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 40, 43));
 
         nove.setBackground(new java.awt.Color(102, 102, 102));
         nove.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -239,7 +248,7 @@ public class CalcFrame extends JFrame implements Observer {
                 noveActionPerformed(evt);
             }
         });
-        sfondo.add(nove, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 43, 43));
+        sfondo.add(nove, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 40, 43));
 
         uguale.setBackground(new java.awt.Color(102, 102, 102));
         uguale.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -249,16 +258,16 @@ public class CalcFrame extends JFrame implements Observer {
                 ugualeActionPerformed(evt);
             }
         });
-        sfondo.add(uguale, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 43, 43));
+        sfondo.add(uguale, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 40, 43));
 
-        Canc.setBackground(new java.awt.Color(102, 102, 102));
-        Canc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/cancella-light.png"))); // NOI18N
-        Canc.addActionListener(new java.awt.event.ActionListener() {
+        elimina.setBackground(new java.awt.Color(102, 102, 102));
+        elimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/elimina-light.png"))); // NOI18N
+        elimina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancActionPerformed(evt);
+                eliminaActionPerformed(evt);
             }
         });
-        sfondo.add(Canc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 80, 40));
+        sfondo.add(elimina, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 40, 43));
 
         addizione.setBackground(new java.awt.Color(102, 102, 102));
         addizione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -268,7 +277,7 @@ public class CalcFrame extends JFrame implements Observer {
                 addizioneActionPerformed(evt);
             }
         });
-        sfondo.add(addizione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 43, 43));
+        sfondo.add(addizione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 40, 43));
 
         sottrazione.setBackground(new java.awt.Color(102, 102, 102));
         sottrazione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -278,7 +287,7 @@ public class CalcFrame extends JFrame implements Observer {
                 sottrazioneActionPerformed(evt);
             }
         });
-        sfondo.add(sottrazione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 43, 43));
+        sfondo.add(sottrazione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 40, 43));
 
         prodotto.setBackground(new java.awt.Color(102, 102, 102));
         prodotto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -288,7 +297,7 @@ public class CalcFrame extends JFrame implements Observer {
                 prodottoActionPerformed(evt);
             }
         });
-        sfondo.add(prodotto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 43, 43));
+        sfondo.add(prodotto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 40, 43));
 
         divisione.setBackground(new java.awt.Color(102, 102, 102));
         divisione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -298,7 +307,7 @@ public class CalcFrame extends JFrame implements Observer {
                 divisioneActionPerformed(evt);
             }
         });
-        sfondo.add(divisione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 43, 43));
+        sfondo.add(divisione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 40, 43));
 
         virgola.setBackground(new java.awt.Color(102, 102, 102));
         virgola.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -308,7 +317,7 @@ public class CalcFrame extends JFrame implements Observer {
                 virgolaActionPerformed(evt);
             }
         });
-        sfondo.add(virgola, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 43, 43));
+        sfondo.add(virgola, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 40, 43));
 
         zero.setBackground(new java.awt.Color(102, 102, 102));
         zero.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -318,7 +327,7 @@ public class CalcFrame extends JFrame implements Observer {
                 zeroActionPerformed(evt);
             }
         });
-        sfondo.add(zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 43, 43));
+        sfondo.add(zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 40, 43));
 
         Conversione.setBackground(new java.awt.Color(102, 102, 102));
         Conversione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -328,7 +337,16 @@ public class CalcFrame extends JFrame implements Observer {
                 ConversioneActionPerformed(evt);
             }
         });
-        sfondo.add(Conversione, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 90, 40));
+        sfondo.add(Conversione, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 90, 40));
+
+        cancella.setBackground(new java.awt.Color(102, 102, 102));
+        cancella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/cancella-light.png"))); // NOI18N
+        cancella.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancellaActionPerformed(evt);
+            }
+        });
+        sfondo.add(cancella, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 90, 43));
 
         getContentPane().add(sfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 320, 370));
 
@@ -559,11 +577,11 @@ public class CalcFrame extends JFrame implements Observer {
         }
     }//GEN-LAST:event_noveActionPerformed
 
-    private void CancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancActionPerformed
+    private void eliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminaActionPerformed
         // TODO add your handling code here:
         display.setText("");
 
-    }//GEN-LAST:event_CancActionPerformed
+    }//GEN-LAST:event_eliminaActionPerformed
 
     private void ConversioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConversioneActionPerformed
 
@@ -590,6 +608,25 @@ public class CalcFrame extends JFrame implements Observer {
         this.setLocation(x-xx, y-xy);
         
     }//GEN-LAST:event_barramultifunzioneMouseDragged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        this.setExtendedState(CalcFrame.ICONIFIED);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cancellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancellaActionPerformed
+        
+        String equazione;
+        
+        if (display.getText().substring(1).length() > 0) {
+            equazione = display.getText().substring(0, display.getText().length() - 1);
+            display.setText(equazione);
+        } else {
+            display.setText("");
+        }
+        
+    }//GEN-LAST:event_cancellaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -637,16 +674,18 @@ public class CalcFrame extends JFrame implements Observer {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Canc;
     private javax.swing.JButton Conversione;
     private javax.swing.JButton addizione;
     private javax.swing.JPanel barramultifunzione;
+    private javax.swing.JButton cancella;
     private javax.swing.JButton chiudi;
     private javax.swing.JButton cinque;
     private javax.swing.JTextField display;
     private javax.swing.JButton divisione;
     private javax.swing.JButton due;
+    private javax.swing.JButton elimina;
     private javax.swing.JButton impostazioni;
+    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JButton nove;
     private javax.swing.JButton otto;
