@@ -4,17 +4,24 @@
  */
 package appcalc;
 
-import classi.*;
+
+import utility.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JFrame;
 
 /**
  *
  * @author tonin
  */
-public class CalcFrame extends javax.swing.JFrame {
+public class CalcFrame extends JFrame implements Observer {
 
+    Osservato Osservato1 = new Osservato();
+    
+    Osservatore frameOsservatore = new Osservatore(this);
+    
     
 
     /**
@@ -22,7 +29,7 @@ public class CalcFrame extends javax.swing.JFrame {
      */
     public CalcFrame() {
         initComponents();
-        
+        Osservato1.addObserver(frameOsservatore);
         setStyle();
         
         
@@ -453,9 +460,6 @@ public class CalcFrame extends javax.swing.JFrame {
             String[] parti = espressione.split(" ");
 
             res = eseguioperazioni(parti);
-            
-            
-
 
             if(res instanceof Reale){
 
@@ -533,7 +537,6 @@ public class CalcFrame extends javax.swing.JFrame {
         impo.setVisible(true);
         
         
-        setColor();
         
     }//GEN-LAST:event_impostazioniActionPerformed
 
@@ -541,7 +544,7 @@ public class CalcFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
         
-        
+        impo.dispose();
         
     }//GEN-LAST:event_chiudiActionPerformed
 
@@ -614,7 +617,11 @@ public class CalcFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CalcFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        
+        
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -677,18 +684,10 @@ public class CalcFrame extends javax.swing.JFrame {
         
     }
 
-    private void setColor() {
-        
-        if(impo.darkmod){
-            darkCalc();
-        }else{
-            lightCalc();
-        }
-        
-    }
     
     
-    private void darkCalc() {
+    
+    public void darkCalc() {
         
         sfondo.setBackground(SfondoDark);
         barramultifunzione.setBackground(BarraDark);
@@ -722,12 +721,12 @@ public class CalcFrame extends javax.swing.JFrame {
     }
     
     
-    public void ricaricaframe(){
-        
-        this.dispose();
-        // Crea un nuovo frame
-        ImpostCalc nuovoFrame = new ImpostCalc();
-        nuovoFrame.setVisible(true);
+    
+    
+    
+    @Override
+    public void update(Observable o, Object arg) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

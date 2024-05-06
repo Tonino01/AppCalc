@@ -4,15 +4,22 @@
  */
 package appcalc;
 
-import java.awt.Color;
-import java.awt.Toolkit;
+import utility.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.Observable;
+import java.util.Observer;
+import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import utility.Osservato;
+
+
 
 /**
  *
  * @author tonin
  */
-public class ImpostCalc extends javax.swing.JFrame {
+public class ImpostCalc extends JFrame{
 
     /**
      * Creates new form ImpostCalc
@@ -115,27 +122,27 @@ public class ImpostCalc extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_barramultifunzioneMouseDragged
-
+    
+    Osservato osservato = new Osservato();
+    
     private void darkmodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darkmodeActionPerformed
         
         
         if(darkmode.isEnabled()){
-            
             sfondo.setBackground(CalcFrame.SfondoDark);
             barramultifunzione.setBackground(CalcFrame.BarraDark);
-            
             darkmod = true;
-            CalcFrame.ricaricaframe();
-            
-            
-        }else{
-            
+        } else {
             sfondo.setBackground(CalcFrame.SfondoLight);
             barramultifunzione.setBackground(CalcFrame.Barralight);
-            
             darkmod = false;
-            
         }
+
+        // Dopo aver modificato lo stato, imposta il nuovo stato in Osservato
+        osservato.setMode(darkmod);
+        // Notifica l'osservatore della modifica di stato
+        osservato.notifyObservers();
+
     }//GEN-LAST:event_darkmodeActionPerformed
     
     public boolean darkmod = false;
