@@ -6,12 +6,11 @@ package appcalc;
 
 import utility.*;
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.Observable;
-import java.util.Observer;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
-import utility.Osservato;
+import java.awt.image.ColorModel;
+import java.io.PrintWriter;
+import java.io.*;
 
 
 
@@ -29,6 +28,7 @@ public class ImpostCalc extends JFrame{
         
         setStyle();
         
+        setColor();
     }
 
     /**
@@ -43,9 +43,12 @@ public class ImpostCalc extends JFrame{
         barramultifunzione = new javax.swing.JPanel();
         chiudi = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        riduciaicona = new javax.swing.JButton();
         sfondo = new javax.swing.JPanel();
-        darkmode = new javax.swing.JRadioButton();
+        ColorMode = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        applica = new javax.swing.JButton();
+        Cronologia = new javax.swing.JButton();
 
         setTitle("IMPOSTAZIONI");
         setLocation(new java.awt.Point(840, 420));
@@ -81,26 +84,50 @@ public class ImpostCalc extends JFrame{
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/impostazioni.png"))); // NOI18N
         barramultifunzione.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 40, 30));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/riduci-a-icona.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        riduciaicona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/riduci-a-icona.png"))); // NOI18N
+        riduciaicona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                riduciaiconaActionPerformed(evt);
             }
         });
-        barramultifunzione.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 30, 30));
+        barramultifunzione.add(riduciaicona, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 30, 30));
 
         getContentPane().add(barramultifunzione, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 50));
 
         sfondo.setBackground(new java.awt.Color(153, 153, 153));
         sfondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        darkmode.setText("DARK MODE");
-        darkmode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                darkmodeActionPerformed(evt);
+        ColorMode.setText("LIGHT MODE");
+        ColorMode.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                ColorModeStateChanged(evt);
             }
         });
-        sfondo.add(darkmode, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        ColorMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColorModeActionPerformed(evt);
+            }
+        });
+        sfondo.add(ColorMode, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+
+        jLabel2.setText("click to change:");
+        sfondo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 90, -1));
+
+        applica.setText("Applica");
+        applica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applicaActionPerformed(evt);
+            }
+        });
+        sfondo.add(applica, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
+
+        Cronologia.setText("Cronologia");
+        Cronologia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CronologiaActionPerformed(evt);
+            }
+        });
+        sfondo.add(Cronologia, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 100, -1));
 
         getContentPane().add(sfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 230, 170));
 
@@ -135,36 +162,66 @@ public class ImpostCalc extends JFrame{
         
         
     }//GEN-LAST:event_barramultifunzioneMouseDragged
+
     
-    Osservato osservato = new Osservato();
-    
-    private void darkmodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darkmodeActionPerformed
-        
-        
-        if(darkmode.isEnabled()){
-            sfondo.setBackground(CalcFrame.SfondoDark);
-            barramultifunzione.setBackground(CalcFrame.BarraDark);
-            darkmod = true;
-        } else {
-            sfondo.setBackground(CalcFrame.SfondoLight);
-            barramultifunzione.setBackground(CalcFrame.Barralight);
-            darkmod = false;
-        }
-
-        // Dopo aver modificato lo stato, imposta il nuovo stato in Osservato
-        osservato.setMode(darkmod);
-        // Notifica l'osservatore della modifica di stato
-        osservato.notifyObservers();
-
-    }//GEN-LAST:event_darkmodeActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void riduciaiconaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_riduciaiconaActionPerformed
         
         this.setExtendedState(ImpostCalc.ICONIFIED);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_riduciaiconaActionPerformed
+
+    private void ColorModeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ColorModeStateChanged
+        
+    }//GEN-LAST:event_ColorModeStateChanged
     
-    public boolean darkmod = false;
+    
+    public void setColorMode(boolean colormode){
+        
+        
+        try (PrintWriter writer = new PrintWriter(AppCalc.colorMode)) {
+                writer.print(AppCalc.darkmode);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+        }
+        
+    }
+    
+    
+    private void ColorModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorModeActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        if(ColorMode.getText().equals("LIGHT MODE")){
+            ColorMode.setText("DARK MODE");
+            AppCalc.setDarkmode(true);
+        }else{
+            ColorMode.setText("LIGHT MODE");
+            AppCalc.setDarkmode(false);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_ColorModeActionPerformed
+
+    private void applicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applicaActionPerformed
+        
+        setColorMode(AppCalc.isDarkmode());
+        
+    }//GEN-LAST:event_applicaActionPerformed
+
+    CronologiaCalc cronologia = new CronologiaCalc();
+    
+    private void CronologiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CronologiaActionPerformed
+        // TODO add your handling code here:
+        
+        cronologia.setVisible(true);
+        
+        
+    }//GEN-LAST:event_CronologiaActionPerformed
+    
+   
     
     
     
@@ -219,18 +276,56 @@ public class ImpostCalc extends JFrame{
         this.setUndecorated(true); 
         this.setVisible(true);
         
+        setLocation(new java.awt.Point(840, 420));
+        
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
         
+        cronologia.setVisible(false);
+        
     }
+    
+    
+    private void setColor() {
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(AppCalc.getColorMode()))) {
+            AppCalc.setDarkmode(Boolean.parseBoolean(reader.readLine()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        if(AppCalc.darkmode){
+            barramultifunzione.setBackground(AppCalc.getBarraDark());
+            sfondo.setBackground(AppCalc.getSfondoDark());
+            ColorMode.setText("DARK MODE");
+        }else{
+            barramultifunzione.setBackground(AppCalc.getBarralight());
+            sfondo.setBackground(AppCalc.getSfondoLight());
+            ColorMode.setText("LIGHT MODE");
+        }
+        
+        
+        
+    }
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ColorMode;
+    private javax.swing.JButton Cronologia;
+    private javax.swing.JButton applica;
     private javax.swing.JPanel barramultifunzione;
     private javax.swing.JButton chiudi;
-    private javax.swing.JRadioButton darkmode;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton riduciaicona;
     private javax.swing.JPanel sfondo;
     // End of variables declaration//GEN-END:variables
+
+    
+    
+    
+    
 
     
 

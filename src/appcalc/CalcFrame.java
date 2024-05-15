@@ -5,22 +5,20 @@
 package appcalc;
 
 
+import appcalc.AppCalc;
 import utility.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
-import java.util.Observable;
-import java.util.Observer;
+import java.io.*;
+import java.util.*;
 import javax.swing.JFrame;
 
 /**
  *
  * @author tonin
  */
-public class CalcFrame extends JFrame implements Observer {
+public class CalcFrame extends JFrame {
 
-    Osservato Osservato1 = new Osservato();
-    
-    Osservatore frameOsservatore = new Osservatore(this);
     
     
 
@@ -29,9 +27,10 @@ public class CalcFrame extends JFrame implements Observer {
      */
     public CalcFrame() {
         initComponents();
-        Osservato1.addObserver(frameOsservatore);
+        
         setStyle();
         
+        setColor();
         
     }
     
@@ -73,6 +72,8 @@ public class CalcFrame extends JFrame implements Observer {
         zero = new javax.swing.JButton();
         Conversione = new javax.swing.JButton();
         cancella = new javax.swing.JButton();
+        parentesidx = new javax.swing.JButton();
+        parentesisix = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CALCOLATRICE");
@@ -114,7 +115,7 @@ public class CalcFrame extends JFrame implements Observer {
                 chiudiActionPerformed(evt);
             }
         });
-        barramultifunzione.add(chiudi, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 31, 31));
+        barramultifunzione.add(chiudi, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 31, 31));
 
         impostazioni.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icon.png"))); // NOI18N
         impostazioni.setContentAreaFilled(false);
@@ -132,14 +133,15 @@ public class CalcFrame extends JFrame implements Observer {
                 jButton1ActionPerformed(evt);
             }
         });
-        barramultifunzione.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 31, 31));
+        barramultifunzione.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 31, 31));
 
-        getContentPane().add(barramultifunzione, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 50));
+        getContentPane().add(barramultifunzione, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 50));
 
         sfondo.setBackground(new java.awt.Color(153, 153, 153));
         sfondo.setForeground(new java.awt.Color(102, 102, 102));
         sfondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        display.setEditable(false);
         display.setBackground(new java.awt.Color(102, 102, 102));
         display.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         display.setForeground(new java.awt.Color(255, 255, 255));
@@ -151,7 +153,7 @@ public class CalcFrame extends JFrame implements Observer {
                 displayActionPerformed(evt);
             }
         });
-        sfondo.add(display, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 300, 60));
+        sfondo.add(display, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 280, 60));
 
         uno.setBackground(new java.awt.Color(102, 102, 102));
         uno.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -161,7 +163,7 @@ public class CalcFrame extends JFrame implements Observer {
                 unoActionPerformed(evt);
             }
         });
-        sfondo.add(uno, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 40, 43));
+        sfondo.add(uno, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 40, 43));
 
         due.setBackground(new java.awt.Color(102, 102, 102));
         due.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -178,7 +180,7 @@ public class CalcFrame extends JFrame implements Observer {
                 dueActionPerformed(evt);
             }
         });
-        sfondo.add(due, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 43, 43));
+        sfondo.add(due, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 43, 43));
 
         tre.setBackground(new java.awt.Color(102, 102, 102));
         tre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -188,7 +190,7 @@ public class CalcFrame extends JFrame implements Observer {
                 treActionPerformed(evt);
             }
         });
-        sfondo.add(tre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 40, 43));
+        sfondo.add(tre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 40, 43));
 
         quattro.setBackground(new java.awt.Color(102, 102, 102));
         quattro.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -198,17 +200,19 @@ public class CalcFrame extends JFrame implements Observer {
                 quattroActionPerformed(evt);
             }
         });
-        sfondo.add(quattro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 40, 43));
+        sfondo.add(quattro, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 40, 43));
 
         cinque.setBackground(new java.awt.Color(102, 102, 102));
         cinque.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         cinque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/cinque-light.png"))); // NOI18N
+        cinque.setBorder(null);
+        cinque.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cinque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cinqueActionPerformed(evt);
             }
         });
-        sfondo.add(cinque, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 43, 43));
+        sfondo.add(cinque, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, 43, 43));
 
         sei.setBackground(new java.awt.Color(102, 102, 102));
         sei.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -218,7 +222,7 @@ public class CalcFrame extends JFrame implements Observer {
                 seiActionPerformed(evt);
             }
         });
-        sfondo.add(sei, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 40, 43));
+        sfondo.add(sei, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 40, 43));
 
         sette.setBackground(new java.awt.Color(102, 102, 102));
         sette.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -228,7 +232,7 @@ public class CalcFrame extends JFrame implements Observer {
                 setteActionPerformed(evt);
             }
         });
-        sfondo.add(sette, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 40, 43));
+        sfondo.add(sette, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 40, 43));
 
         otto.setBackground(new java.awt.Color(102, 102, 102));
         otto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -238,7 +242,7 @@ public class CalcFrame extends JFrame implements Observer {
                 ottoActionPerformed(evt);
             }
         });
-        sfondo.add(otto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 40, 43));
+        sfondo.add(otto, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 40, 43));
 
         nove.setBackground(new java.awt.Color(102, 102, 102));
         nove.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -248,7 +252,7 @@ public class CalcFrame extends JFrame implements Observer {
                 noveActionPerformed(evt);
             }
         });
-        sfondo.add(nove, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 40, 43));
+        sfondo.add(nove, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 40, 43));
 
         uguale.setBackground(new java.awt.Color(102, 102, 102));
         uguale.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -258,16 +262,17 @@ public class CalcFrame extends JFrame implements Observer {
                 ugualeActionPerformed(evt);
             }
         });
-        sfondo.add(uguale, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 40, 43));
+        sfondo.add(uguale, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 40, 43));
 
         elimina.setBackground(new java.awt.Color(102, 102, 102));
+        elimina.setForeground(new java.awt.Color(86, 86, 86));
         elimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/elimina-light.png"))); // NOI18N
         elimina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminaActionPerformed(evt);
             }
         });
-        sfondo.add(elimina, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 40, 43));
+        sfondo.add(elimina, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 40, 43));
 
         addizione.setBackground(new java.awt.Color(102, 102, 102));
         addizione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -277,7 +282,7 @@ public class CalcFrame extends JFrame implements Observer {
                 addizioneActionPerformed(evt);
             }
         });
-        sfondo.add(addizione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 40, 43));
+        sfondo.add(addizione, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 40, 43));
 
         sottrazione.setBackground(new java.awt.Color(102, 102, 102));
         sottrazione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -287,7 +292,7 @@ public class CalcFrame extends JFrame implements Observer {
                 sottrazioneActionPerformed(evt);
             }
         });
-        sfondo.add(sottrazione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 40, 43));
+        sfondo.add(sottrazione, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 40, 43));
 
         prodotto.setBackground(new java.awt.Color(102, 102, 102));
         prodotto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -297,7 +302,7 @@ public class CalcFrame extends JFrame implements Observer {
                 prodottoActionPerformed(evt);
             }
         });
-        sfondo.add(prodotto, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 40, 43));
+        sfondo.add(prodotto, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 40, 43));
 
         divisione.setBackground(new java.awt.Color(102, 102, 102));
         divisione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -307,7 +312,7 @@ public class CalcFrame extends JFrame implements Observer {
                 divisioneActionPerformed(evt);
             }
         });
-        sfondo.add(divisione, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 40, 43));
+        sfondo.add(divisione, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 40, 43));
 
         virgola.setBackground(new java.awt.Color(102, 102, 102));
         virgola.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -317,7 +322,7 @@ public class CalcFrame extends JFrame implements Observer {
                 virgolaActionPerformed(evt);
             }
         });
-        sfondo.add(virgola, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 40, 43));
+        sfondo.add(virgola, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, 40, 43));
 
         zero.setBackground(new java.awt.Color(102, 102, 102));
         zero.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -327,17 +332,17 @@ public class CalcFrame extends JFrame implements Observer {
                 zeroActionPerformed(evt);
             }
         });
-        sfondo.add(zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 40, 43));
+        sfondo.add(zero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 40, 43));
 
         Conversione.setBackground(new java.awt.Color(102, 102, 102));
         Conversione.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Conversione.setText("Conv");
+        Conversione.setText("conv");
         Conversione.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ConversioneActionPerformed(evt);
             }
         });
-        sfondo.add(Conversione, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 90, 40));
+        sfondo.add(Conversione, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 360, 90, 43));
 
         cancella.setBackground(new java.awt.Color(102, 102, 102));
         cancella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/cancella-light.png"))); // NOI18N
@@ -346,24 +351,32 @@ public class CalcFrame extends JFrame implements Observer {
                 cancellaActionPerformed(evt);
             }
         });
-        sfondo.add(cancella, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 90, 43));
+        sfondo.add(cancella, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 90, 43));
 
-        getContentPane().add(sfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 320, 370));
+        parentesidx.setBackground(new java.awt.Color(102, 102, 102));
+        parentesidx.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/parentesisx-light.png"))); // NOI18N
+        parentesidx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parentesidxActionPerformed(evt);
+            }
+        });
+        sfondo.add(parentesidx, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 43, 43));
+
+        parentesisix.setBackground(new java.awt.Color(102, 102, 102));
+        parentesisix.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/light/parentesidx-light.png"))); // NOI18N
+        parentesisix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parentesisixActionPerformed(evt);
+            }
+        });
+        sfondo.add(parentesisix, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 43, 43));
+
+        getContentPane().add(sfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 300, 430));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
-    public static Color SfondoLight = new java.awt.Color(153, 153, 153);
-    
-    public static Color Barralight = new java.awt.Color(51,51,51);
-    
-    public static Color SfondoDark = new java.awt.Color(51,51,51);
-    
-    public static Color BarraDark = Color.BLACK;
-    
     
     
     
@@ -431,37 +444,74 @@ public class CalcFrame extends JFrame implements Observer {
     
     
     
-    private static Calcolatrice eseguioperazioni(String[] parti) {
-        
-        Calcolatrice res = new Reale(parti[0]);
+    private Calcolatrice eseguioperazioni(String espressione) {
+        // Rimuovi gli spazi extra dall'espressione
+        espressione = espressione.replaceAll("\\s+", "");
 
-        for (int i = 1; i < parti.length; i += 2) {
-            String operatore = parti[i];
-            Calcolatrice operando = new Reale(parti[i + 1]);
+        // Converte l'espressione in un array di stringhe divise dagli operatori
+        String[] parti = espressione.split("(?<=[-+*/()])|(?=[-+*/()])");
 
-            // Se l'operatore è una moltiplicazione o divisione, esegui l'operazione immediatamente
-            if (operatore.equals("*")) {
-                res = res.prodotto(operando);
-            } else if (operatore.equals("/")) {
-                res = res.divisione(operando);
+        Calcolatrice risultato = null;
+        String operatore = null;
+        Calcolatrice operando = null;
+
+        for (int i = 0; i < parti.length; i++) {
+            String parte = parti[i];
+            if (parte.equals("(")) {
+                int chiusura = trovaParentesiChiusa(parti, i);
+                Calcolatrice risultatoParentesi = eseguioperazioni(espressione.substring(i + 1, chiusura));
+                if (risultato == null) {
+                    risultato = risultatoParentesi;
+                } else {
+                    operando = risultatoParentesi;
+                    risultato = eseguiOperazione(risultato, operatore, operando);
+                }
+                i = chiusura;
+            } else if (parte.equals("+") || parte.equals("-") || parte.equals("*") || parte.equals("/")) {
+                operatore = parte;
+            } else {
+                operando = new Reale(Double.parseDouble(parte));
+                if (risultato == null) {
+                    risultato = operando;
+                } else {
+                    risultato = eseguiOperazione(risultato, operatore, operando);
+                }
             }
         }
 
-        // Ripeti il ciclo per eseguire le operazioni di somma e sottrazione
-        for (int i = 1; i < parti.length; i += 2) {
-            String operatore = parti[i];
-            Calcolatrice operando = new Reale(parti[i + 1]);
-
-            // Se l'operatore è una somma o una sottrazione, esegui l'operazione
-            if (operatore.equals("+")) {
-                res = res.somma(operando);
-            } else if (operatore.equals("-")) {
-                res = res.sottrazione(operando);
-            }
-        }
-
-        return res;
+        return risultato;
     }
+
+    private Calcolatrice eseguiOperazione(Calcolatrice operando1, String operatore, Calcolatrice operando2) {
+        switch (operatore) {
+            case "+":
+                return operando1.somma(operando2);
+            case "-":
+                return operando1.sottrazione(operando2);
+            case "*":
+                return operando1.prodotto(operando2);
+            case "/":
+                return operando1.divisione(operando2);
+            default:
+                throw new IllegalArgumentException("Operatore non valido: " + operatore);
+        }
+    }
+
+    private int trovaParentesiChiusa(String[] parti, int indiceParentesiAperta) {
+        int aperte = 1;
+        for (int i = indiceParentesiAperta + 1; i < parti.length; i++) {
+            if (parti[i].equals("(")) {
+                aperte++;
+            } else if (parti[i].equals(")")) {
+                aperte--;
+                if (aperte == 0) {
+                    return i;
+                }
+            }
+        }
+        throw new IllegalArgumentException("Parentesi non bilanciate");
+    }
+
 
     
     
@@ -469,16 +519,38 @@ public class CalcFrame extends JFrame implements Observer {
         // TODO add your handling code here:
         Calcolatrice res = new Reale();
         
+        
+        
         // Ottieni la stringa dal display
         String espressione = display.getText();
         
-        if(!espressione.isEmpty()){
+        impo.cronologia.setText();
         
+        if(!espressione.isEmpty()){
+            
+            
+            
+            
+            
             // Divido la stringa in base agli spazi per ottenere i due operandi e l'operatore
-            String[] parti = espressione.split(" ");
+            
 
-            res = eseguioperazioni(parti);
-
+            res = eseguioperazioni(espressione);
+            
+            
+            try {
+                FileWriter writer = new FileWriter(AppCalc.fileCronologia, true); // true per la modalità di append
+                BufferedWriter bufferedWriter = new BufferedWriter(writer);
+                bufferedWriter.newLine(); // Vai alla prossima riga
+                bufferedWriter.write(display.getText() + " = " + res);
+                bufferedWriter.close();
+                
+            } catch (IOException e) {
+                System.out.println("Si è verificato un errore durante la scrittura nel file.");
+                e.printStackTrace();
+            }
+            
+            
             if(res instanceof Reale){
 
                 String numeroStringa = Double.toString(((Reale) res).getReale());
@@ -497,12 +569,16 @@ public class CalcFrame extends JFrame implements Observer {
             }else{
                 display.setText("FATAL ERROR");
             }
+            
         }else{
             display.setText("");
         }
         
     }//GEN-LAST:event_ugualeActionPerformed
 
+    
+    
+    
     private void addizioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addizioneActionPerformed
         // TODO add your handling code here:
         if(!display.getText().isEmpty()){
@@ -549,7 +625,11 @@ public class CalcFrame extends JFrame implements Observer {
             display.setText(display.getText() + "0");
         }
     }//GEN-LAST:event_zeroActionPerformed
-
+    
+    ImpostCalc impo = new ImpostCalc();
+        
+    
+    
     private void impostazioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_impostazioniActionPerformed
         
         impo.setVisible(true);
@@ -560,9 +640,9 @@ public class CalcFrame extends JFrame implements Observer {
 
     private void chiudiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chiudiActionPerformed
         // TODO add your handling code here:
-        dispose();
-        
+        this.dispose();
         impo.dispose();
+        impo.cronologia.dispose();
         
     }//GEN-LAST:event_chiudiActionPerformed
 
@@ -620,13 +700,36 @@ public class CalcFrame extends JFrame implements Observer {
         String equazione;
         
         if (display.getText().substring(1).length() > 0) {
-            equazione = display.getText().substring(0, display.getText().length() - 1);
-            display.setText(equazione);
+            if((display.getText().charAt(display.getText().length()-1))== ' '){
+                equazione = display.getText().substring(0, display.getText().length() - 3);
+                display.setText(equazione);
+            }else{
+                equazione = display.getText().substring(0, display.getText().length() - 1);
+                display.setText(equazione);
+            }
+            
+            
         } else {
             display.setText("");
         }
         
     }//GEN-LAST:event_cancellaActionPerformed
+
+    private void parentesidxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parentesidxActionPerformed
+        
+        if(!display.getText().contains("+") || !display.getText().contains("-") || !display.getText().contains("*") || !display.getText().contains("/")){
+            display.setText(display.getText() + ")");
+        }
+        
+    }//GEN-LAST:event_parentesidxActionPerformed
+
+    private void parentesisixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parentesisixActionPerformed
+        
+        if(!display.getText().contains("+") || !display.getText().contains("-") || !display.getText().contains("*") || !display.getText().contains("/")){
+            display.setText(display.getText() + "(");
+        }
+        
+    }//GEN-LAST:event_parentesisixActionPerformed
 
     /**
      * @param args the command line arguments
@@ -654,7 +757,6 @@ public class CalcFrame extends JFrame implements Observer {
             java.util.logging.Logger.getLogger(CalcFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
         
         
         
@@ -689,6 +791,8 @@ public class CalcFrame extends JFrame implements Observer {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JButton nove;
     private javax.swing.JButton otto;
+    private javax.swing.JButton parentesidx;
+    private javax.swing.JButton parentesisix;
     private javax.swing.JButton prodotto;
     private javax.swing.JButton quattro;
     private javax.swing.JButton sei;
@@ -702,7 +806,7 @@ public class CalcFrame extends JFrame implements Observer {
     private javax.swing.JButton zero;
     // End of variables declaration//GEN-END:variables
 
-    ImpostCalc impo = new ImpostCalc();
+    
     
     
     public void setStyle() {
@@ -717,10 +821,29 @@ public class CalcFrame extends JFrame implements Observer {
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
         
         
-        
         impo.setVisible(false);
         
         
+        
+    }
+    
+    
+    public void setColor(){
+        
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(AppCalc.getColorMode()))) {
+            AppCalc.setDarkmode(Boolean.parseBoolean(reader.readLine()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        if(AppCalc.darkmode){
+            darkCalc();
+        }else{
+            lightCalc();
+        }
+        
+    
     }
 
     
@@ -728,9 +851,9 @@ public class CalcFrame extends JFrame implements Observer {
     
     public void darkCalc() {
         
-        sfondo.setBackground(SfondoDark);
-        barramultifunzione.setBackground(BarraDark);
-        display.setBackground(new java.awt.Color(102,102,102));
+        sfondo.setBackground(AppCalc.getSfondoDark());
+        barramultifunzione.setBackground(AppCalc.getBarraDark());
+        display.setBackground(new java.awt.Color(69,67,67));
         display.setForeground(Color.black);
         
         zero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dark/zero-dark.png")));
@@ -749,7 +872,8 @@ public class CalcFrame extends JFrame implements Observer {
         virgola.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dark/virgola-dark.png")));
         prodotto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dark/prodotto-dark.png")));
         divisione.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dark/divisione-dark.png")));
-        
+//        cancella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dark/cancella-dark.png")));
+        elimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/dark/elimina-dark.png")));
     }
 
     public void lightCalc() {
@@ -758,14 +882,17 @@ public class CalcFrame extends JFrame implements Observer {
         setDefaultLookAndFeelDecorated(true);
         
     }
-    
-    
-    
-    
-    
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+    public void ricarica() {
+        this.dispose();
+        
+        this.setVisible(true);
     }
+    
+    
+    
+    
+    
+    
     
 }

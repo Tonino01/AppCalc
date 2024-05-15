@@ -12,6 +12,9 @@ import appcalc.Calcolatrice;
  * @author tonin
  */
 public class Reale implements Calcolatrice{
+
+    
+    
     
     protected double reale;
     
